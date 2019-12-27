@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cathi extends Model
 {
+    protected $table = 'cathis';
     protected $fillable = [
         'user_id',
         'name',

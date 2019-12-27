@@ -29,12 +29,13 @@
                 <td>{{ $monthi->user->name }}</td>
                 
                 <td>
-                    <div class="row">
-                        <div class="col-md-3">
+                    <div class="operate">
+                        <div>
                             <a href="{{ route('admin.monthis.edit', $monthi->id) }}" class="btn btn-sm btn-primary">Sửa</a>
                         </div>
+                        
 
-                        <div class="col-md-3">
+                        <div>
                             <form action="{{ route('admin.monthis.destroy', $monthi->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -57,6 +58,16 @@
 @endsection
 
 @section('css')
+<style>
+    .operate {
+        display: inline-flex;
+    }
+
+    .operate > div {
+        padding-right: 5px;
+    }
+
+</style>
 @stop
 
 @section('js')

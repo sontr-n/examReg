@@ -144,7 +144,7 @@ return [
         ],
         [
             'text'  => 'Danh sách Sinh viên',
-            'url'   => 'admin/sinvien',
+            'url'   => 'admin/sinhvien',
             'icon'  => 'far fa-file',
             'label_color'   => 'success',
         ],

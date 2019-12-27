@@ -29,4 +29,5 @@ Route::middleware('auth')
    	Route::resource('monthis', 'MonthiController');
     Route::resource('cathis', 'CathiController');
     Route::resource('home', 'HomeController');
+    Route::resource('sinhvien', 'SinhvienController');
 });

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Monthi extends Model
 {
+    protected $table = 'monthis';
     protected $fillable = [
         'user_id',
         'name',
