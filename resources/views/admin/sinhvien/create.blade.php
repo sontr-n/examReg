@@ -30,7 +30,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <label for="studentid" class="col-md-4 col-form-label text-md-right">{{ __('Mã sinh viên') }}</label>
 

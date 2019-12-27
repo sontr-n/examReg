@@ -29,6 +29,7 @@
                <td>{{$sv->studentId}}</td>
                <td>{{$sv->class}}</td>
                <td>{{$sv->dob}}</td>
+               <td></td>
             </tr>
         @endforeach
     </tbody>

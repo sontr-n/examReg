@@ -4,18 +4,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\User;
 
 use Illuminate\Http\Request;
 
-class SinhvienController extends Controller
+class StudentController extends Controller
 {
     public function index()
     {
-        $users = User::where('role', 'student');
-        $ids = $users->pluck('id')->toArray();
-        $svs = Student::find($ids);
-        return view('admin.sinhvien.index', compact(['svs']));
+        $svs = DB::table('users')
+                ->join('students', 'users.id', '=', 'students.userid')
+                ->where('roles', 'student')
+                ->get();
+        return view('admin.sinhvien.index', compact('svs'));
     }
 
 
@@ -36,10 +38,10 @@ class SinhvienController extends Controller
         ]);
 
         try {
-            $data['role'] = 'student';
+            $data['roles'] = 'student';
             $data['password'] = Hash::make($data['studentId']);
             $user = User::create($data);
-            $data['userid'] = $user->id; 
+            $data['userId'] = $user->id; 
             Student::create($data);
 
         } catch (\Exception $e) {
