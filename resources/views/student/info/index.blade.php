@@ -4,24 +4,27 @@
 
 
 <div class="container">
-    @if (session('status'))
+    @if (session('status-err'))
         <div class="alert alert-danger">
-            {{ session('status') }}
+            {{ session('status-err') }}
+        </div>
+    @elseif (session('status-success'))
+        <div class="alert alert-success">
+            {{ session('status-success') }}
         </div>
     @endif
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.sinhvien.update', $student->userid) }}">
+                    <form method="POST" action="{{ route('student.update') }}">
                         @csrf
-                        @method('PUT')
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Tên sinh viên') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $student->name }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') ?? $student->name }}" required autocomplete="name" disabled>
                             </div>
                         </div>
 
@@ -29,21 +32,21 @@
                             <label for="studentId" class="col-md-4 col-form-label text-md-right">{{ __('Mã sinh viên') }}</label>
 
                             <div class="col-md-6">
-                                <input id="studentId" type="text" class="form-control @error('studentId') is-invalid @enderror" name="studentId" value="{{ old('studentId') ?? $student->studentId }}" required autocomplete="studentId" autofocus>
+                                <input id="studentId" type="text" class="form-control @error('studentId') is-invalid @enderror" name="studentId" value="{{ old('studentId') ?? $student->studentId }}" required autocomplete="studentId" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="class" class="col-md-4 col-form-label text-md-right">{{ __('Lớp') }}</label>
 
                             <div class="col-md-6">
-                                <input id="class" type="text" class="form-control @error('class') is-invalid @enderror" name="class" value="{{ old('class') ?? $student->class }}" required autocomplete="class" autofocus>
+                                <input id="class" type="text" class="form-control @error('class') is-invalid @enderror" name="class" value="{{ old('class') ?? $student->class }}" required autocomplete="class" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="dob" class="col-md-4 col-form-label text-md-right">{{ __('Ngày tháng năm sinh') }}</label>
 
                             <div class="col-md-6">
-                                <input id="dob" type="date" class="form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') ?? $student->dob }}" required autocomplete="subjectid" autofocus>
+                                <input id="dob" type="date" class="form-control @error('dob') is-invalid @enderror" name="dob" value="{{ old('dob') ?? $student->dob }}" required autocomplete="subjectid">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -53,7 +56,6 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') ?? $student->email }}" required autocomplete="subjectid" autofocus>
                             </div>
                         </div>
-
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

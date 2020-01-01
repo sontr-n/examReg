@@ -23,65 +23,27 @@ class StudentController extends Controller
         return view('student.info.index', compact('student'));
     }
 
-
-    public function edit($id) {
+    public function update(Request $request) {
+        $data = $request->only([
+            'dob',
+            'email',
+        ]);
+        $id = auth()->id();
         $student = DB::table('students')
                     ->join('users', 'users.id', '=', 'students.userId')
                     ->where('users.id', $id)
                     ->first();
-        return view('admin.sinhvien.edit', compact('student'));
-    }
-
-
-    public function create()
-    {
-        return view('admin.sinhvien.create');
-    }
-
-
-    public function store(Request $request)
-    {
-        $data = $request->only([
-            'name',
-            'dob',
-            'class',
-            'studentId',
-            'email',
-        ]);
-
+        $user = User::find($id);
+        $st = Student::where('studentId', $student->studentId)->first();
         try {
-            $data['roles'] = 'student';
-            $data['password'] = Hash::make($data['studentId']);
-            $user = User::create($data);
-            $data['userId'] = $user->id;
-            $st = DB::table('students')
-            ->where('studentId', $data['studentId'])
-            ->get(); 
-            //check if existed a student has a same stduentId  
-            if (count($st) > 0)
-                return back()->withInput($data)->with('status', 'Tồn tại mã sinh viên');             
-            Student::create($data);
-
-        } catch (\Exception $e) {
-            \Log::error($e);   
-            return back()->withInput($data)->with('status', 'Tạo sinh viên lỗi');
-        }
-        
-        return redirect('/admin/sinhvien/')
-            ->with('status', 'Tạo sinh viên thành công!');
-    }
-
-    public function destroy($id) {
-        $user = User::findOrFail($id);
-        $student = Student::where('userId', $user->id);
-        try {
-            $student->delete();
-            $user->delete();
+            $user->update($data);
+            $st->update($data);
         } catch (\Exception $e) {
             \Log::error($e);
-            return back()->with('status', 'Xóa thất bại');
+            return back()->with('status-err', 'Cập nhập lỗi');
         }
 
-        return redirect('admin/sinhvien')->with('status', 'Xoá thành công');
+        return redirect()->route('student.getInfo')->with('status-success', 'Cập nhập thành công');
     }
+
 }

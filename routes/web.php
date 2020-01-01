@@ -30,6 +30,7 @@ Route::middleware('auth')
     ->namespace('Student')
     ->group(function() {
         Route::get('info', 'StudentController@getInfo')->name('getInfo');
+        Route::post('update', 'StudentController@update')->name('update');
     });
 Route::middleware('auth')
     ->prefix('admin') 
