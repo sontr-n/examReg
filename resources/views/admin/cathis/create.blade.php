@@ -60,10 +60,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="room" class="col-md-4 col-form-label text-md-right">{{ __('Số phòng') }}</label>
+                            <label for="room" class="col-md-4 col-form-label text-md-right">{{ __('Tên phòng') }}</label>
 
                             <div class="col-md-6">
-                                <input id="room" type="number" min=1 class="form-control @error('room') is-invalid @enderror" name="room" required autocomplete="room">{{ old('room') }}</textarea>
+                                <input id="room" type="text" min=1 class="form-control @error('room') is-invalid @enderror" name="room" required autocomplete="room">{{ old('room') }}</textarea>
 
                                 @error('room')
                                     <span class="invalid-feedback" role="alert">

@@ -16,7 +16,7 @@
     <thead>
         <tr>
             <th>Ca thi</th>
-            <th>Phòng thi</th>
+            <th>Tên phòng</th>
             <th>Số máy tính</th>
             <th>Môn học</th>
             <th>Mã môn</th>
