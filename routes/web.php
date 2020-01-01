@@ -31,6 +31,9 @@ Route::middleware('auth')
     ->group(function() {
         Route::get('info', 'StudentController@getInfo')->name('getInfo');
         Route::post('update', 'StudentController@update')->name('update');
+        Route::get('dang-ky', 'ScheduleController@index')->name('schedule.index');
+        Route::get('dangky/{monthiId}', 'ScheduleController@getCathi')->name('schedule.monthi');
+        Route::post('dangky/cathi', 'ScheduleController@postCathi')->name('schedule.submit');
     });
 Route::middleware('auth')
     ->prefix('admin') 
