@@ -17,6 +17,7 @@
             <th>Tên Sinh viên</th>
             <th>Mã Sinh viên</th>
             <th>Lớp</th>
+            <th>Email</th>
             <th>Tình trạng</th>
             <th>Thao tác</th>
         </tr>
@@ -27,6 +28,7 @@
                 <td>{{$s->name}}</td>
                 <td>{{$s->studentId}}</td>
                 <td>{{$s->class}}</td>
+                <td>{{$s->email}}</td>
                 @if ($s->eligible)
                 <td><p style="color: #00c728">Đủ điều kiện<p></td>
                 @else 

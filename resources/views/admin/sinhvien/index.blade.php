@@ -19,6 +19,7 @@
             <th>Mã Sinh viên</th>
             <th>Lớp</th>
             <th>Ngày sinh</th>
+            <th>Email</th>
             <th>Thao tác</th>
         </tr>
     </thead>
@@ -29,7 +30,7 @@
                 <td>{{$s->studentId}}</td>
                 <td>{{$s->class}}</td>
                 <td>{{$s->dob}}</td>
-    
+                <td>{{$s->email}}</td>
                 <td>
                     <div class="operate">
                         <div>

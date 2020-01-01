@@ -106,7 +106,7 @@ return [
     |
     */
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => 'admin/home',
 
     'logout_url' => 'logout',
 
@@ -153,6 +153,20 @@ return [
             'url'         => 'admin/monthis',
             'icon'        => 'far fa-file',
             'label_color' => 'success',
+        ],
+        [
+            'text'  => 'Thông tin cá nhân',
+            'url'   => 'sinhvien/info',
+            'icon'  => 'far fa-file',
+            'label_color'   => 'success', 
+            'role'  => 'student',
+        ],
+        [
+            'text'  => 'Đăng ký lịch thi',
+            'url'   => 'sinhvien/dang-ky',
+            'icon'  => 'far fa-file',
+            'label_color'   => 'success', 
+            'role'  => 'student',
         ],
         ['header' => 'account_settings'],
         [

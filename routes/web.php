@@ -25,11 +25,17 @@ Route::namespace('Admin')
 Auth::routes();
 
 Route::middleware('auth')
+    ->prefix('sinhvien')
+    ->name('student.')
+    ->namespace('Student')
+    ->group(function() {
+        Route::get('info', 'StudentController@getInfo')->name('getInfo');
+    });
+Route::middleware('auth')
     ->prefix('admin') 
     ->name('admin.')  
     ->namespace('Admin')
     ->group(function () {
-    	
    	Route::resource('monthis', 'MonthiController');
     Route::resource('cathis', 'CathiController');
     Route::resource('home', 'HomeController');
@@ -40,4 +46,4 @@ Route::middleware('auth')
     Route::get('monthis/{monthiId}/edit-student/{studentId}', 'MonthiController@getEditStudent')->name('monthis.getEditStudent');
     Route::post('monthis/{monthiId}/edit-student/{studentId}', 'MonthiController@postEditStudent')->name('monthis.postEditStudent');
     Route::post('monthis/{monthiId}/delete-student/{studentId}', 'MonthiController@deleteStudent')->name('monthis.deleteStudent');
-});
+    });

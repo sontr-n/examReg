@@ -10,7 +10,6 @@ use App\Models\MonthiSinhvien;
 use App\Models\Cathi;
 use App\Models\Student;
 
-
 class MonthiController extends Controller
 {
     /**
