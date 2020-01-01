@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Monthi;
-use App\Models\CathiMonthi;
+use App\Models\MonthiSinhvien;
 use App\Models\Cathi;
+use App\Models\Student;
 
 
 class MonthiController extends Controller
@@ -21,6 +23,56 @@ class MonthiController extends Controller
         $monthis = Monthi::orderBy('created_at', 'desc')->get();
 
         return view('admin.monthis.index', ['monthis' => $monthis]);
+    }
+    
+    public function listStudentIndex($monthiId) {
+        $registedStudents = DB::table('sinhvien_monthi')
+                ->join('students', 'students.studentId', '=', 'sinhvien_monthi.studentId')
+                ->join('users', 'students.userId', '=', 'users.id')
+                ->where('monthiId', $monthiId)
+                ->get();
+        return view('admin.monthis.dssv', compact('registedStudents', 'monthiId'));
+    }
+
+    public function getAddStudent($monthiId) {
+        $students = DB::table('users')
+        ->join('students', 'users.id', '=', 'students.userid')
+        ->join('sinhvien_monthi', 'sinhvien_monthi.studentId', '=', 'students.id')
+        ->join('monthis', 'monthis.id', '=', 'sinhvien_monthi.monthiId')
+        ->where('monthiId', 'NULL')
+        ->where('roles', 'student')
+        ->get();
+        return view('admin.monthis.addStudent', compact('students', 'monthiId'));
+    }
+
+    public function postAddStudent(Request $request, $monthiId) {
+        $data = $request->only([
+            'studentId',
+            'eligible',
+        ]);
+        $data['monthiId'] = $monthiId;
+        try {
+            $tbl = DB::table('sinhvien_monthi')
+                ->where('studentId', $data['studentId'])
+                ->where('monthiId', $monthiId)
+                ->get();
+            if (count($tbl) > 0)
+                return back()->withInput($data)->with('status', 'Sinh viên đẫ có trong danh sách');
+            
+            $tbl = DB::table('students')
+                ->where('studentId', $data['studentId'])  
+                ->get();
+            if (count($tbl) == 0)
+                return back()->withInput($data)->with('status', 'không tồn tại sinh viên');
+
+            MonthiSinhvien::create($data);
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return back()->withInput($data)->with('status', 'Thêm sinh viên lỗi');
+        }
+        
+        return redirect()->route('admin.monthis.dssv', $monthiId) 
+                        ->with('status', 'Thêm sinh viên thành công!');
     }
 
     /**
@@ -128,5 +180,27 @@ class MonthiController extends Controller
         }
 
         return redirect('admin/monthis')->with('status', 'Xoá thành công');
+    }
+
+    public function deleteStudent($monthiId, $userId) {
+        $registedStudents = DB::table('sinhvien_monthi')
+                ->join('students', 'students.studentId', '=', 'sinhvien_monthi.studentId')
+                ->join('users', 'students.userId', '=', 'users.id')
+                ->where('monthiId', $monthiId)
+                ->get();
+        $student = DB::table('students')
+                ->join('users', 'users.id', '=', 'students.userId')
+                ->where('users.id', $userId)    
+                ->first();
+        $mt_sv = MonthiSinhvien::where('studentId', $student->studentId)
+                ->where('monthiId', $monthiId)
+                ->firstOrFail();
+        try {
+            $mt_sv->delete();
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return back()->with('status', 'Xóa thất bại.');
+        }
+        return redirect()->route('admin.monthis.dssv', compact('monthiId', 'registedStudents'))->with('status', 'Xoá thành công');
     }
 }

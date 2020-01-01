@@ -39,6 +39,15 @@ body {
 .wrapper:after {
   clear: both;
 }
+
+.operate {
+  display: inline-flex;
+}
+
+.operate > div {
+  padding-right: 5px;
+}
+
 .layout-boxed .wrapper {
   max-width: 1250px;
   margin: 0 auto;

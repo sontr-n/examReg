@@ -50,12 +50,12 @@
                 <td>{{$cathi->endTime}}</td>
                 <td>{{ $cathi->user->name }}</td>
                 <td>
-                    <div class="row">
-                        <div class="col-md-3">
+                    <div class="operate">
+                        <div>
                             <a href="{{ route('admin.cathis.edit', $cathi->id) }}" class="btn btn-sm btn-primary">Sửa</a>
                         </div>
 
-                        <div class="col-md-3">
+                        <div>
                             <form action="{{ route('admin.cathis.destroy', $cathi->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -78,14 +78,17 @@
 @endsection
 
 @section('css')
+<style>
+    .operate {
+        display: inline-flex;
+    }
+
+    .operate > div {
+        padding-right: 5px;
+    }
+
+</style>
 @stop
 
 @section('js')
-    <script>
-        $(document).ready(function() {
-            $('#category-table').DataTable({
-                "order": [[ 5, "desc" ]]
-            });
-        } );
-    </script>
 @stop

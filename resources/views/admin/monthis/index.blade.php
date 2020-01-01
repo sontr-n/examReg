@@ -31,10 +31,11 @@
                 <td>
                     <div class="operate">
                         <div>
+                            <a href="{{route('admin.monthis.dssv', $monthi->id) }}" class="btn btn-sm btn-info">Danh sách đăng ký</a>
+                        </div>
+                        <div>
                             <a href="{{ route('admin.monthis.edit', $monthi->id) }}" class="btn btn-sm btn-primary">Sửa</a>
                         </div>
-                        
-
                         <div>
                             <form action="{{ route('admin.monthis.destroy', $monthi->id) }}" method="POST">
                                 @csrf
@@ -71,11 +72,4 @@
 @stop
 
 @section('js')
-    <script>
-        $(document).ready(function() {
-            $('#category-table').DataTable({
-                "order": [[ 5, "desc" ]]
-            });
-        } );
-    </script>
 @stop

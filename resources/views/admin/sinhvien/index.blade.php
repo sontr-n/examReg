@@ -23,13 +23,33 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($svs as $sv)
+        @foreach ($students as $s)
             <tr>
-               <td>{{$sv->name}}</td>
-               <td>{{$sv->studentId}}</td>
-               <td>{{$sv->class}}</td>
-               <td>{{$sv->dob}}</td>
-               <td></td>
+                <td>{{$s->name}}</td>
+                <td>{{$s->studentId}}</td>
+                <td>{{$s->class}}</td>
+                <td>{{$s->dob}}</td>
+    
+                <td>
+                    <div class="operate">
+                        <div>
+                            <a href="{{ route('admin.sinhvien.edit', $s->userid) }}" class="btn btn-sm btn-primary">Sửa</a>
+                        </div>
+                        <div>
+                            <form action="{{ route('admin.sinhvien.destroy', $s->userid) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            {{ __('Xoá') }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </td>
             </tr>
         @endforeach
     </tbody>
@@ -38,14 +58,18 @@
 @endsection
 
 @section('css')
+<style>
+    .operate {
+        display: inline-flex;
+    }
+
+    .operate > div {
+        padding-right: 5px;
+    }
+
+</style>
 @stop
 
 @section('js')
-    <script>
-        $(document).ready(function() {
-            $('#category-table').DataTable({
-                "order": [[ 5, "desc" ]]
-            });
-        } );
-    </script>
+
 @stop
