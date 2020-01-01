@@ -27,7 +27,7 @@
     <tbody>
         @foreach ($cathis as $cathi)
             <tr>
-                @if ($registedCathi->cathi_id == $cathi->id)
+                @if ($registedCathi != null && $registedCathi->cathi_id == $cathi->id)
                     <td><input type="radio" name="cathiId" value='{{$cathi->id}}' checked></td>
                 @elseif ($cathi->quantityPC > 0)
                     <td><input type="radio" name="cathiId" value='{{$cathi->id}}'></td>
