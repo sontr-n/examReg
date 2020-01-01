@@ -40,13 +40,16 @@ class ScheduleController extends Controller
     }
 
     public function postCathi(Request $request) {
-        //check if cathi has been scheduled
+        $data = $request->only(['cathiId']);
         //get student id
         $id = auth()->id();
         $student = Student::where('userId', $id)->first();
-        $data = $request->only([
-            'cathiId'
-        ]);
+        //check if cathi has been scheduled
+        $existedSchedule = Schedule::where('cathiId', $data['cathiId'])
+                            ->where('studentId', $student->studentId)
+                            ->first();
+        if ($existedSchedule != null)
+            return redirect()->route('student.schedule.index')->with('status', 'Lưu thành công');
         //add student id into data array
         $data['studentId'] = $student->studentId;
         //save schedule to DB
