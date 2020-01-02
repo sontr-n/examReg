@@ -6,6 +6,9 @@ use App\Models\Student;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Excel;    
+use App\Imports\StudentsImport;
+
 
 use Illuminate\Http\Request;
 
@@ -26,6 +29,18 @@ class StudentController extends Controller
         ->where('roles', 'student')
         ->get();
         return $students;
+    }
+
+    public function uploadStudentList(Request $request) {
+        try {
+            //get path
+            $path = $request->file('file')->getRealPath();
+            Excel::import(new StudentsImport, $path);
+        } catch (\Exception $e) {
+            \Log::error($e);   
+            return back()->with('status-err', 'Upload file thất bại');
+        }
+        return back()->with('status-success', 'Upload file thành công');
     }
 
     public function getStudentAPI(Request $request, $studentId) {
@@ -61,7 +76,6 @@ class StudentController extends Controller
             'studentId',
             'email',
         ]);
-
         try {
             $data['roles'] = 'student';
             $data['password'] = Hash::make($data['studentId']);
