@@ -2,14 +2,32 @@
 
 @section('content')
 
-@if (session('status'))
+
+@if (session('status-success'))
     <div class="alert alert-success">
-        {{ session('status') }}
+        {{ session('status-success') }}
+    </div>
+@endif
+@if (session('status-err'))
+    <div class="alert alert-error">
+        {{ session('status-err') }}
     </div>
 @endif
 
-<h1>Danh sách đăng ký: </h1>
-<a href="{{route('admin.monthis.addStudent', $monthiId)}}" class="btn btn-primary">Thêm sinh viên</a>
+
+<h1>Danh sách đăng ký </h1>
+<div style="display: flex">
+    <div>
+        <a href="{{route('admin.monthis.addStudent', $monthiId)}}" style='margin-right: 700px' class="btn btn-primary">Thêm sinh viên</a>
+    </div>
+    <div>
+    <form action="{{route('admin.monthi.upload')}}" method="post" enctype="multipart/form-data">
+    @csrf
+        <input type="file" name="file" style='display:inline' accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        <button type="submit" class="btn btn-info">Upload file</button>
+    </form>
+    </div>
+</div>
 <hr>
 <table id="category-table" class="table table-striped table-bordered" style="width:100%">
     <thead>

@@ -17,12 +17,12 @@
 <h1>Danh sách Sinh viên: </h1>
 <div style="display: flex">
     <div>
-    <a href="/admin/sinhvien/create" class="btn btn-primary">Thêm sinh viên</a>
+        <a href="/admin/sinhvien/create" style='margin-right: 700px' class="btn btn-primary">Thêm sinh viên</a>
     </div>
-    <div >
+    <div>
     <form action="{{route('admin.sinhvien.upload')}}" method="post" enctype="multipart/form-data">
     @csrf
-        <input type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        <input type="file" name="file" style='display:inline' accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
         <button type="submit" class="btn btn-info">Upload file</button>
     </form>
     </div>

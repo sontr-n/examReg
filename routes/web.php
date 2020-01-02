@@ -51,4 +51,5 @@ Route::middleware('auth')
     Route::post('monthis/{monthiId}/edit-student/{studentId}', 'MonthiController@postEditStudent')->name('monthis.postEditStudent');
     Route::post('monthis/{monthiId}/delete-student/{studentId}', 'MonthiController@deleteStudent')->name('monthis.deleteStudent');
     Route::post('sinhvien/upload', 'StudentController@uploadStudentList')->name('sinhvien.upload');
+    Route::post('monthi/upload', 'MonthiController@uploadStudentList')->name('monthi.upload');
     });

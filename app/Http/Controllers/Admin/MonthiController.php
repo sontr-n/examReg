@@ -9,6 +9,8 @@ use App\Models\Monthi;
 use App\Models\MonthiSinhvien;
 use App\Models\Cathi;
 use App\Models\Student;
+use App\Imports\SubjectStudentImport;
+use Excel; 
 
 class MonthiController extends Controller
 {
@@ -113,6 +115,18 @@ class MonthiController extends Controller
         
         return redirect('/admin/monthis/')
             ->with('status', 'Tạo môn thi thành công!');
+    }
+
+    public function uploadStudentList(Request $request) {
+        try {
+            //get path
+            $path = $request->file('file')->getRealPath();
+            Excel::import(new SubjectStudentImport, $path);
+        } catch (\Exception $e) {
+            \Log::error($e);   
+            return back()->with('status-err', 'Upload file thất bại');
+        }
+        return back()->with('status-success', 'Upload file thành công');
     }
 
     /**
